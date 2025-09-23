@@ -6,10 +6,17 @@ const jwt = require('jsonwebtoken');
 const { OpenAI } = require('openai');
 const mongoose = require("mongoose");
 const stripe = require('stripe')(process.env.STRIPE_TEST_SECRET_KEY);
+const axios = require("axios"); // move this up with other requires
 const User = require("./models/User");
+const mpesaRoutes = require("./routes/mpesaRoutes.cjs");
+const Payment = require("./models/Payment");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
+
+// use routes
+app.use("/api", mpesaRoutes);
+
 
 // ==================================================
 // ✅ Stripe Webhook MUST come BEFORE express.json()
@@ -227,6 +234,117 @@ app.post('/api/create-checkout-session', authenticateToken, async (req, res) => 
   } catch (error) {
     console.error('❌ Error creating checkout session:', error.message);
     res.status(500).json({ error: error.message });
+  }
+});
+
+// ==================================================
+// M-Pesa STK Push Payment
+// ==================================================
+
+// Helper: Get M-Pesa access token
+async function getMpesaToken() {
+  const auth = Buffer.from(
+    `${process.env.MPESA_CONSUMER_KEY}:${process.env.MPESA_CONSUMER_SECRET}`
+  ).toString("base64");
+
+  const res = await axios.get(
+    "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",
+    { headers: { Authorization: `Basic ${auth}` } }
+  );
+
+  return res.data.access_token;
+}
+
+// Route: Initiate STK Push
+app.post("/api/mpesa/pay", authenticateToken, async (req, res) => {
+  try {
+    const { phone, amount } = req.body;
+
+    const token = await getMpesaToken();
+
+    const timestamp = new Date()
+      .toISOString()
+      .replace(/[-T:.Z]/g, "")
+      .slice(0, 14);
+
+    const password = Buffer.from(
+      `${process.env.MPESA_SHORTCODE}${process.env.MPESA_PASSKEY}${timestamp}`
+    ).toString("base64");
+
+    const response = await axios.post(
+      "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
+      {
+        BusinessShortCode: process.env.MPESA_SHORTCODE,
+        Password: password,
+        Timestamp: timestamp,
+        TransactionType: "CustomerPayBillOnline",
+        Amount: amount,
+        PartyA: phone,
+        PartyB: process.env.MPESA_SHORTCODE,
+        PhoneNumber: phone,
+        CallBackURL: `${process.env.BACKEND_URL}/api/mpesa/callback`,
+        AccountReference: "HumanizerApp",
+        TransactionDesc: "Upgrade Plan"
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    res.json({ success: true, data: response.data });
+  } catch (err) {
+    console.error("❌ M-Pesa STK error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Route: M-Pesa Callback
+app.post("/api/mpesa/callback", express.json(), async (req, res) => {
+  try {
+    const callbackData = req.body.Body.stkCallback;
+    console.log("📥 Callback:", JSON.stringify(callbackData, null, 2));
+
+    const { CheckoutRequestID, ResultCode, ResultDesc } = callbackData;
+
+    const payment = await Payment.findOne({ transactionId: CheckoutRequestID });
+    if (!payment) {
+      console.warn("⚠️ No payment found for:", CheckoutRequestID);
+      return res.json({ received: true });
+    }
+
+    payment.rawResponse = callbackData;
+
+    if (ResultCode === 0) {
+      payment.status = "success";
+
+      // Upgrade user plan & credits
+      const user = await User.findById(payment.userId);
+      if (user) {
+        user.plan = "premium";
+        user.credits += 1000;
+        await user.save();
+      }
+    } else {
+      payment.status = "failed";
+    }
+
+    await payment.save();
+
+    res.json({ received: true });
+  } catch (err) {
+    console.error("❌ Callback error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/api/payment-status/:transactionId", authenticateToken, async (req, res) => {
+  try {
+    const { transactionId } = req.params;
+    const payment = await Payment.findOne({ transactionId, userId: req.user.id });
+
+    if (!payment) return res.status(404).json({ error: "Payment not found" });
+
+    res.json({ status: payment.status });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
