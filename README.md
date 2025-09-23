@@ -1,11 +1,3 @@
-theewizardone: #codebase 
-Rewrite the readme to match the flow of the entire project
-
-GitHub Copilot: Searched codebase for "#codebase 
-Rewrite the readme to match the flow of the entire project", 10 results
-
-// filepath: README.md
-
 # Writer Wizard – AI Text Humanizer
 
 Writer Wizard is a full-stack web application that transforms AI-generated text into natural, human-like content. It features user authentication, a credit system, Stripe payments, and a modern, responsive frontend.
@@ -131,6 +123,8 @@ Wizardwriter/
 
 **Founder:** Eng. Kobira Davis  
 [Instagram: @44kobii](https://www.instagram.com/44kobii/)
+**Co-Founder:** Eng. Morara Alfonce
+[Github: (https://github.com/theewizardone)]
 
 ---
 
