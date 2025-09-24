@@ -10,12 +10,33 @@ const axios = require("axios"); // move this up with other requires
 const User = require("./models/User");
 const mpesaRoutes = require("./routes/mpesaRoutes.cjs");
 const Payment = require("./models/Payment");
+const path = require("path"); // <-- this line was missing
+
 
 const app = express();
 const PORT = process.env.PORT || 5001;
 
+app.use(express.json());
+
+app.use(cors({
+  origin: 'http://localhost:8000', // Allow your frontend origin
+  credentials: true
+}));
+
+// Serve all files inside frontend/
+app.use(express.static(path.join(__dirname, "../frontend")));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/index.html"));
+});
+
+app.listen(8000, () => {
+  console.log("Frontend running at http://localhost:8000");
+});
+
 // use routes
 app.use("/api", mpesaRoutes);
+
 
 
 // ==================================================
@@ -258,7 +279,7 @@ async function getMpesaToken() {
 // Route: Initiate STK Push
 app.post("/api/mpesa/pay", authenticateToken, async (req, res) => {
   try {
-    const { phone, amount } = req.body;
+    const { phone, amount, accountReference, transactionDesc } = req.body; // <-- add these
 
     const token = await getMpesaToken();
 
@@ -283,18 +304,24 @@ app.post("/api/mpesa/pay", authenticateToken, async (req, res) => {
         PartyB: process.env.MPESA_SHORTCODE,
         PhoneNumber: phone,
         CallBackURL: `${process.env.BACKEND_URL}/api/mpesa/callback`,
-        AccountReference: "HumanizerApp",
-        TransactionDesc: "Upgrade Plan"
+        AccountReference: accountReference || "HumanizerApp", // <-- use frontend value
+        TransactionDesc: transactionDesc || "Upgrade Plan"     // <-- use frontend value
       },
       { headers: { Authorization: `Bearer ${token}` } }
     );
 
     res.json({ success: true, data: response.data });
   } catch (err) {
-    console.error("❌ M-Pesa STK error:", err.message);
-    res.status(500).json({ error: err.message });
-  }
+    if (err.response && err.response.data) {
+        console.error("❌ M-Pesa STK error:", JSON.stringify(err.response.data, null, 2));
+        res.status(500).json({ error: err.response.data });
+    } else {
+        console.error("❌ M-Pesa STK error:", err.message);
+        res.status(500).json({ error: err.message });
+    }
+  };
 });
+
 
 // Route: M-Pesa Callback
 app.post("/api/mpesa/callback", express.json(), async (req, res) => {
@@ -345,6 +372,56 @@ app.get("/api/payment-status/:transactionId", authenticateToken, async (req, res
     res.json({ status: payment.status });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+// ===============================
+// GET /api/pricing-plans
+// ===============================
+app.get('/api/pricing-plans', (req, res) => {
+  res.json([
+    {
+      id: 'basic',
+      name: 'Basic',
+      price: 1,
+      credits: 100,
+      features: ['100 credits', 'Email support'],
+      stripePriceId: process.env.STRIPE_PRICE_ID
+    },
+    {
+      id: 'premium',
+      name: 'Premium',
+      price: 15,
+      credits: 1000,
+      features: ['1000 credits', 'Priority support'],
+      stripePriceId: process.env.STRIPE_PRICE_ID // Add more price IDs if needed
+    },
+    {
+      id: 'pro',
+      name: 'Pro',
+      price: 25,
+      credits: 2500,
+      features: ['2500 credits', 'Priority support', 'Early access features'],
+      stripePriceId: process.env.STRIPE_PRICE_ID // Add more price IDs if needed
+    }
+  ]);
+});
+// ===============================
+// POST /api/create-stripe-session
+// ===============================
+app.post('/api/create-stripe-session', authenticateToken, async (req, res) => {
+  try {
+    const { priceId } = req.body;
+    const session = await stripe.checkout.sessions.create({
+      mode: 'subscription', // <-- Change to 'subscription' if using recurring price
+      payment_method_types: ['card'],
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url: `${process.env.FRONTEND_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.FRONTEND_URL}/cancel`,
+      client_reference_id: req.user.id,
+    });
+    res.json({ sessionId: session.id, url: session.url });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 

@@ -44,11 +44,11 @@ router.post("/initiate-mpesa-payment", async (req, res) => {
         Password: password,
         Timestamp: timestamp,
         TransactionType: "CustomerPayBillOnline",
-        Amount: 1, // replace with plan price
+        Amount: 25, // replace with plan price
         PartyA: phoneNumber,
         PartyB: MPESA_SHORTCODE,
         PhoneNumber: phoneNumber,
-        CallBackURL: "https://yourdomain.com/api/mpesa/callback", // replace with your callback URL
+        CallBackURL: "https://mydomain.com/path", // replace with your callback URL
         AccountReference: `PLAN-${planId}`,
         TransactionDesc: "Payment for Humanizer Pro Plan",
       },

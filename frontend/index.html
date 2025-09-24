@@ -1,573 +1,598 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Humanizer Pro</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    :root {
-      --primary: #4f46e5;
-      --secondary: #9ca3af;
-      --background: #ffffff;
-      --background-dark: #1f2937;
-      --text: #111827;
-      --text-light: #f9fafb;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: var(--background);
-      color: var(--text);
-      transition: background 0.3s, color 0.3s;
-    }
-
-    body.dark-theme {
-      background: var(--background-dark);
-      color: var(--text-light);
-    }
-
-    header {
-      background: var(--primary);
-      color: white;
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-
-    main {
-      max-width: 900px;
-      margin: auto;
-      padding: 2rem;
-    }
-
-    textarea {
-      width: 100%;
-      height: 150px;
-      padding: 1rem;
-      border: 1px solid var(--secondary);
-      border-radius: 0.5rem;
-      font-size: 1rem;
-      resize: vertical;
-    }
-
-    #outputArea {
-      margin-top: 1rem;
-      padding: 1rem;
-      border: 1px dashed var(--secondary);
-      border-radius: 0.5rem;
-      min-height: 100px;
-      white-space: pre-wrap;
-    }
-
-    .controls {
-      margin: 1rem 0;
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    button {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    button:disabled {
-      background: var(--secondary);
-      cursor: not-allowed;
-    }
-
-    .auth-section, .login-section, .register-section {
-      margin: 2rem 0;
-      padding: 1rem;
-      border: 1px solid var(--secondary);
-      border-radius: 0.5rem;
-    }
-
-    .auth-section p {
-      margin: 0.5rem 0;
-    }
-
-    .input-group {
-      margin: 0.5rem 0;
-    }
-
-    input[type="email"], input[type="password"], input[type="text"], input[type="number"] {
-      width: 100%;
-      padding: 0.7rem;
-      border: 1px solid var(--secondary);
-      border-radius: 0.5rem;
-      margin-top: 0.3rem;
-    }
-
-    /* ============================
-       PAYMENT & MODALS STYLING
-    =============================== */
-    .payment {
-      margin: 2rem 0;
-      text-align: center;
-    }
-
-    .pricing-plans {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-      margin-top: 1rem;
-    }
-
-    .plan-card {
-      border: 1px solid var(--secondary);
-      border-radius: 1rem;
-      padding: 1rem;
-      width: 220px;
-      background: var(--background);
-      box-shadow: var(--shadow);
-      text-align: center;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .plan-card:hover {
-      border-color: var(--primary);
-    }
-
-    .plan-card.selected {
-      border: 2px solid var(--primary);
-    }
-
-    .plan-card h4 {
-      margin: 0.5rem 0;
-    }
-
-    .plan-card .plan-price {
-      font-size: 1.3rem;
-      font-weight: bold;
-      margin: 0.5rem 0;
-    }
-
-    .plan-card ul {
-      list-style: none;
-      padding: 0;
-      margin: 0.5rem 0;
-    }
-
-    .plan-card li {
-      font-size: 0.9rem;
-      margin: 0.2rem 0;
-    }
-
-    /* Modal Base */
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-    }
-
-    .modal-content {
-      background: var(--background);
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: var(--shadow);
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-      position: relative;
-    }
-
-    .modal-content h2 {
-      margin-bottom: 1rem;
-    }
-
-    .modal-content input {
-      width: 100%;
-      padding: 0.7rem;
-      margin-top: 1rem;
-      border: 1px solid var(--secondary);
-      border-radius: 0.5rem;
-    }
-
-    .modal-content .primary-btn {
-      margin-top: 1rem;
-      width: 100%;
-    }
-
-    /* Close button */
-    .modal .close {
-      position: absolute;
-      top: 0.7rem;
-      right: 1rem;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writer Wizard - AI Text Humanizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-  <header>Humanizer Pro</header>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-hat-wizard"></i>
+                    </div>
+                    <div>
+                        <h1>Writer Wizard</h1>
+                        <p class="subtitle">Transform AI-generated text into natural, human-like content</p>
+                    </div>
+                </div>
+                <div class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-sun"></i>
+                    <label class="toggle-switch">
+                        <label for="themeCheckbox" title="Toggle theme">
+                            <input type="checkbox" id="themeCheckbox" aria-label="Toggle theme">
+                        </label>
+                        <span class="slider"></span>
+                    </label>
+                    <i class="fas fa-moon"></i>
+                </div>
+            </div>
+        </header>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">50K+</div>
+                <div class="stat-label">Texts Humanized</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">User Satisfaction</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">2.5x</div>
+                <div class="stat-label">Faster Processing</div>
+            </div>
+        </div>
+        
+        <!-- Auth Section -->
+        <div class="auth-section" id="authSection">
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-user"></i> Account</h3>
+                <div id="userInfo">
+                    <p>Email: <span id="userEmail"></span></p>
+                    <p>Plan: <span id="userPlan"></span></p>
+                    <p>Credits: <span id="userCredits"></span></p>
+                </div>
+                <div class="button-group">
+                    <button class="secondary-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                    <button class="primary-btn" onclick="showPaymentModal()">
+                        <i class="fas fa-crown"></i> Upgrade Plan
+                    </button>
+                </div>
+            </div>
+        </div>
 
-  <main>
-    <section>
-      <textarea id="inputText" placeholder="Enter text to humanize..."></textarea>
-      <div id="wordCount">0</div>
-      <div class="controls">
-        <button id="humanizeBtn"><i class="fas fa-wand-magic-sparkles"></i> Humanize</button>
-        <button id="copyBtn"><i class="fas fa-copy"></i> Copy Text</button>
-        <button onclick="loadSample()">Load Sample</button>
-        <button onclick="clearText()">Clear</button>
-      </div>
-      <div id="outputArea">Your humanized text will appear here...</div>
-    </section>
+        <!-- Login Section -->
+        <div id="loginSection">
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-sign-in-alt"></i> Login</h3>
+                <input type="email" id="loginEmail" placeholder="Email" class="form-control">
+                <input type="password" id="loginPassword" placeholder="Password" class="form-control">
+                <button class="primary-btn" onclick="login()">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <p>Don't have an account? <a href="#" onclick="showRegister()">Register</a></p>
+            </div>
+        </div>
 
-    <!-- Auth Sections -->
-    <section id="loginSection" class="login-section">
-      <h3>Login</h3>
-      <div class="input-group">
-        <label>Email</label>
-        <input type="email" id="loginEmail">
-      </div>
-      <div class="input-group">
-        <label>Password</label>
-        <input type="password" id="loginPassword">
-      </div>
-      <button onclick="login()">Login</button>
-      <p>Don’t have an account? <a href="#" onclick="showRegister()">Register</a></p>
-    </section>
-
-    <section id="registerSection" class="register-section" style="display:none;">
-      <h3>Register</h3>
-      <div class="input-group">
-        <label>Email</label>
-        <input type="email" id="registerEmail">
-      </div>
-      <div class="input-group">
-        <label>Password</label>
-        <input type="password" id="registerPassword">
-      </div>
-      <div class="input-group">
-        <label>Confirm Password</label>
-        <input type="password" id="registerConfirmPassword">
-      </div>
-      <button onclick="register()">Register</button>
-      <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
-    </section>
-
-    <section id="authSection" class="auth-section" style="display:none;">
-      <h3>Welcome <span id="userEmail"></span></h3>
-      <p>Plan: <span id="userPlan"></span></p>
-      <p>Credits: <span id="userCredits"></span></p>
-      <button onclick="logout()">Logout</button>
-      <button onclick="showPaymentModal()">Buy Credits</button>
-    </section>
-  </main>
-
-  <!-- Payment Modal -->
-  <div id="paymentModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('paymentModal')">&times;</span>
-      <h2>Select a Plan</h2>
-      <div id="pricingPlans" class="pricing-plans"></div>
-      <button class="payment-btn" onclick="showStripePayment()" disabled>Pay with Stripe</button>
-      <button class="payment-btn" onclick="showMpesaPayment()" disabled>Pay with M-Pesa</button>
-
-      <div id="stripePayment" style="display:none;">
-        <button class="primary-btn" onclick="initiateStripePayment()">Proceed with Stripe</button>
-      </div>
-
-      <div id="mpesaPayment" style="display:none;">
-        <input type="text" id="mpesaPhone" placeholder="Enter Kenyan phone (254...)">
-        <button class="primary-btn" onclick="initiateMpesaPayment()">Proceed with M-Pesa</button>
-      </div>
+        <!-- Register Section -->
+        <div id="registerSection" class="hidden-section">
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-user-plus"></i> Register</h3>
+                <input type="email" id="registerEmail" placeholder="Email" class="form-control">
+                <input type="password" id="registerPassword" placeholder="Password" class="form-control">
+                <input type="password" id="registerConfirmPassword" placeholder="Confirm Password" class="form-control">
+                <button class="primary-btn" onclick="register()">
+                    <i class="fas fa-user-plus"></i> Register
+                </button>
+                <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div>
+                <div class="card">
+                    <div class="input-section">
+                        <div class="input-header">
+                            <h3 class="card-title"><i class="fas fa-keyboard"></i> Your AI Text</h3>
+                            <div class="word-count">
+                                <i class="fas fa-font"></i>
+                                Words: <span id="wordCount">0</span>/2000
+                            </div>
+                        </div>
+                        <div class="text-area-container">
+                            <textarea id="inputText" placeholder="Paste your AI-generated text here..." class="vibrant-input"></textarea>
+                        </div>
+                    </div>
+                    <div class="controls">
+                        <div class="tool-info">
+                            <div class="badge">Enhanced Model</div>
+                            <span>Better results with context awareness</span>
+                        </div>
+                        <div class="button-group">
+                            <button class="secondary-btn" onclick="loadSample()">
+                                <i class="fas fa-lightbulb"></i> Try a Sample
+                            </button>
+                            <button class="secondary-btn" onclick="clearText()">
+                                <i class="fas fa-broom"></i> Clear
+                            </button>
+                            <button class="primary-btn" onclick="humanize()" id="humanizeBtn">
+                                <i class="fas fa-wand-magic-sparkles"></i> Humanize
+                            </button>
+                        </div>
+                    </div>
+                    <div class="credit-info hidden" id="freeTierInfo">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Free tier: Limited to 200 words. <a href="#" onclick="showLogin()">Login</a> for more credits.</span>
+                    </div>
+                    <div class="output-section">
+                        <h3 class="card-title"><i class="fas fa-file-alt"></i> Humanized Output</h3>
+                        <div id="outputArea" class="output-area vibrant-input">Your humanized text will appear here...</div>
+                    </div>
+                    <div class="button-group">
+                        <button class="success-btn" onclick="copyToClipboard()" id="copyBtn">
+                            <i class="fas fa-copy"></i> Copy Text
+                        </button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-sliders-h"></i> Customization</h3>
+                    <div class="customization-option">
+                        <label for="toneSelect">Tone:</label>
+                        <select id="toneSelect" class="form-select">
+                            <option value="neutral">Neutral</option>
+                            <option value="formal">Formal</option>
+                            <option value="casual">Casual</option>
+                            <option value="friendly">Friendly</option>
+                            <option value="professional">Professional</option>
+                        </select>
+                    </div>
+                    <div class="customization-option">
+                        <label for="creativitySlider">Creativity: <span id="creativityValue">5</span></label>
+                        <input type="range" id="creativitySlider" min="1" max="10" value="5" class="form-range">
+                    </div>
+                    <div class="customization-option">
+                        <label for="purposeSelect">Purpose:</label>
+                        <select id="purposeSelect" class="form-select">
+                            <option value="general">General Writing</option>
+                            <option value="blog">Blog Post</option>
+                            <option value="email">Email</option>
+                            <option value="academic">Academic</option>
+                            <option value="marketing">Marketing</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>Fast Processing</h3>
+                        <p>Get human-like text in seconds with our optimized algorithms</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Privacy Focused</h3>
+                        <p>Your text is processed securely and never stored on our servers</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <h3>Natural Output</h3>
+                        <p>Advanced NLP techniques ensure your text sounds genuinely human</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="card founder-section">
+                    <h3 class="card-title"><i class="fas fa-crown"></i> Our Founder</h3>
+                    <div class="founder-card">
+                        <div class="founder-image">KB</div>
+                        <div class="founder-info">
+                            <h3 class="founder-name">Eng. Kobira Davis</h3>
+                            <p class="founder-title">AI Specialist & Software Engineer</p>
+                            <p class="founder-bio">With over 10 years of experience in natural language processing and AI systems, Eng. Davis founded Writer Wizard to bridge the gap between AI-generated content and human-like expression.</p>
+                            <a href="https://www.instagram.com/44kobii/" class="social-link" target="_blank" rel="noopener">
+                                <i class="fab fa-instagram"></i> @44kobii
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-code"></i> API Integration</h3>
+                    <p>Easily integrate Writer Wizard with your applications using our powerful API.</p>
+                    <div class="button-group margin-top-20">
+                        <button class="secondary-btn" onclick="alert('API documentation would open here')">
+                            <i class="fas fa-book"></i> Documentation
+                        </button>
+                        <button class="primary-btn" onclick="alert('API key management would open here')">
+                            <i class="fas fa-key"></i> Get API Key
+                        </button>
+                    </div>
+                </div>
+                <h2 class="card-title center-content"><i class="fas fa-star"></i> What Our Users Say</h2>
+            </div>
+        </div>
+        <div class="testimonials">
+            <h2 class="card-title center-content"><i class="fas fa-star"></i> What Our Users Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"Writer Wizard has completely transformed how I work with AI-generated content. The results are incredibly natural and save me hours of editing time."</p>
+                    <div class="testimonial-author">
+                        <div class="author-image">SC</div>
+                        <div class="author-details">
+                            <span class="author-name">Sarah Chen</span>
+                            <span class="author-title">Content Strategist</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"As a non-native English speaker, this tool helps me sound more natural in my professional communications. It's like having a personal editor."</p>
+                    <div class="testimonial-author">
+                        <div class="author-image">JO</div>
+                        <div class="author-details">
+                            <span class="author-name">James Okon</span>
+                            <span class="author-title">Marketing Director</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"The customization options allow me to tailor the output precisely for different audiences. This is exactly what our team needed for scaling content creation."</p>
+                    <div class="testimonial-author">
+                        <div class="author-image">ER</div>
+                        <div class="author-details">
+                            <span class="author-name">Elena Rodriguez</span>
+                            <span class="author-title">Product Manager</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="quote">
+                "The future of writing is not artificial intelligence, but augmented intelligence - where technology enhances human creativity rather than replacing it."
+            </div>
+            <p>Writer Wizard &copy; 2023 | AI Text Humanizer Tool | Founded by Eng. Kobira Davis</p>
+        </footer>
+        <!-- Payment Modal (single instance) -->
+        <div id="paymentModal" class="modal hidden-modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('paymentModal')">&times;</span>
+                <h3><i class="fas fa-crown"></i> Upgrade Your Plan</h3>
+                <p>Choose a payment method to continue using Writer Wizard</p>
+                <div class="pricing-plans" id="pricingPlans"></div>
+                <div class="payment-methods">
+                    <h4>Select Payment Method:</h4>
+                    <div class="payment-options">
+                        <button class="payment-btn stripe-btn" onclick="showStripePayment()" disabled>
+                            <i class="fab fa-stripe"></i> Credit/Debit Card
+                        </button>
+                        <button class="payment-btn mpesa-btn" onclick="showMpesaPayment()" disabled>
+                            <i class="fas fa-mobile-alt"></i> M-Pesa
+                        </button>
+                    </div>
+                </div>
+                <div id="stripePayment" class="hidden">
+                    <h4>Pay with Card</h4>
+                    <p>You will be redirected to Stripe to complete your payment</p>
+                    <button class="primary-btn" onclick="initiateStripePayment()" title="Pay with Stripe">
+                        <i class="fab fa-stripe"></i> Pay with Stripe
+                    </button>
+                </div>
+                <div id="mpesaPayment" class="hidden">
+                    <h4>Pay with M-Pesa</h4>
+                    <input type="tel" id="mpesaPhone" placeholder="2547XXXXXXXX" class="form-control">
+                    <button class="primary-btn" onclick="initiateMpesaPayment()">
+                        <i class="fas fa-mobile-alt"></i> Request Payment
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Login Prompt Modal (single instance) -->
+        <div id="loginPromptModal" class="modal hidden-modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('loginPromptModal')">&times;</span>
+                <h3><i class="fas fa-user"></i> Login Required</h3>
+                <p>Please login or register to continue using Writer Wizard</p>
+                <div class="button-group">
+                    <button class="secondary-btn" onclick="closeModal('loginPromptModal'); showLogin()">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    <button class="primary-btn" onclick="closeModal('loginPromptModal'); showRegister()">
+                        <i class="fas fa-user-plus"></i> Register
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Payment Processing Modal (single instance) -->
+        <div id="paymentProcessingModal" class="modal hidden">
+            <div class="modal-content">
+                <h3><i class="fas fa-spinner fa-spin"></i> Processing Payment</h3>
+                <p id="paymentStatusMessage">Please wait while we process your payment...</p>
+                <div class="loading-bar">
+                    <div class="loading-progress"></div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+    <script>
+        const BACKEND_URL = 'http://localhost:5001';
+        const inputText = document.getElementById('inputText');
+        const outputArea = document.getElementById('outputArea');
+        const wordCountElement = document.getElementById('wordCount');
+        const humanizeBtn = document.getElementById('humanizeBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const authSection = document.getElementById('authSection');
+        const loginSection = document.getElementById('loginSection');
+        const registerSection = document.getElementById('registerSection');
+        let selectedPlan = null;
+        let paymentSessionId = null;
+        let authToken = localStorage.getItem('authToken');
+        let currentUser = null;
 
-  <!-- Payment Processing Modal -->
-  <div id="paymentProcessingModal" class="modal">
-    <div class="modal-content">
-      <h2>Processing Payment</h2>
-      <p id="paymentStatusMessage">Please wait...</p>
-    </div>
-  </div>
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) modal.style.display = 'none';
+        }
 
-  <script>
-    // ================== DOM Elements ==================
-    const inputText = document.getElementById('inputText');
-    const outputArea = document.getElementById('outputArea');
-    const wordCountElement = document.getElementById('wordCount');
-    const humanizeBtn = document.getElementById('humanizeBtn');
-    const copyBtn = document.getElementById('copyBtn');
-    const authSection = document.getElementById('authSection');
-    const loginSection = document.getElementById('loginSection');
-    const registerSection = document.getElementById('registerSection');
+        function updateWordCount() {
+            const text = inputText.value;
+            const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+            wordCountElement.textContent = words;
+            if (words > 1500) {
+                wordCountElement.style.color = '#ef4444';
+            } else if (words > 1000) {
+                wordCountElement.style.color = '#f59e0b';
+            } else {
+                wordCountElement.style.color = '';
+            }
+        }
+        inputText.addEventListener('input', updateWordCount);
 
-    // Payment variables
-    let selectedPlan = null;
-    let paymentSessionId = null;
-    let authToken = localStorage.getItem('authToken');
-    let currentUser = null;
+        function showLogin() {
+            loginSection.style.display = 'block';
+            registerSection.style.display = 'none';
+            authSection.style.display = 'none';
+        }
+        function showRegister() {
+            loginSection.style.display = 'none';
+            registerSection.style.display = 'block';
+            authSection.style.display = 'none';
+        }
+        function showAuth() {
+            loginSection.style.display = 'none';
+            registerSection.style.display = 'none';
+            authSection.style.display = 'block';
+        }
 
-    // ================== Word Count ==================
-    function updateWordCount() {
-      const text = inputText.value;
-      const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
-      wordCountElement.textContent = words;
+        async function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            if (!email || !password) return alert('Enter email and password');
+            try {
+                const res = await fetch(`${BACKEND_URL}/api/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    authToken = data.token;
+                    currentUser = data.user;
+                    localStorage.setItem('authToken', authToken);
+                    showAuth(); updateUserInfo();
+                } else alert(data.error || 'Login failed');
+            } catch (err) { alert('Login error: ' + err.message); }
+        }
 
-      if (words > 1500) {
-        wordCountElement.style.color = '#ef4444';
-      } else if (words > 1000) {
-        wordCountElement.style.color = '#f59e0b';
-      } else {
-        wordCountElement.style.color = '';
-      }
-    }
-    inputText.addEventListener('input', updateWordCount);
+        async function register() {
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirm = document.getElementById('registerConfirmPassword').value;
+            if (!email || !password || !confirm) return alert('Fill all fields');
+            if (password !== confirm) return alert('Passwords do not match');
+            try {
+                const res = await fetch(`${BACKEND_URL}/api/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    authToken = data.token;
+                    currentUser = data.user;
+                    localStorage.setItem('authToken', authToken);
+                    showAuth(); updateUserInfo();
+                    alert('Registration successful! You have received 10 free credits.');
+                } else alert(data.error || 'Registration failed');
+            } catch (err) { alert('Register error: ' + err.message); }
+        }
 
-    // ================== Auth ==================
-    function showLogin() {
-      loginSection.style.display = 'block';
-      registerSection.style.display = 'none';
-      authSection.style.display = 'none';
-    }
-    function showRegister() {
-      loginSection.style.display = 'none';
-      registerSection.style.display = 'block';
-      authSection.style.display = 'none';
-    }
-    function showAuth() {
-      loginSection.style.display = 'none';
-      registerSection.style.display = 'none';
-      authSection.style.display = 'block';
-    }
+        function logout() {
+            authToken = null;
+            currentUser = null;
+            localStorage.removeItem('authToken');
+            showLogin();
+        }
 
-    async function login() {
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
-      if (!email || !password) return alert('Enter email and password');
+        async function fetchUserInfo() {
+            try {
+                const res = await fetch(`${BACKEND_URL}/api/user`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    currentUser = data.user;
+                    showAuth(); updateUserInfo();
+                } else logout();
+            } catch { logout(); }
+        }
 
-      try {
-        const res = await fetch('/api/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
-        const data = await res.json();
-        if (res.ok) {
-          authToken = data.token;
-          currentUser = data.user;
-          localStorage.setItem('authToken', authToken);
-          showAuth(); updateUserInfo();
-        } else alert(data.error || 'Login failed');
-      } catch (err) { alert('Login error: ' + err.message); }
-    }
+        function updateUserInfo() {
+            if (currentUser) {
+                document.getElementById('userEmail').textContent = currentUser.email;
+                document.getElementById('userPlan').textContent = currentUser.plan;
+                document.getElementById('userCredits').textContent = currentUser.credits;
+            }
+        }
+        if (authToken) fetchUserInfo();
 
-    async function register() {
-      const email = document.getElementById('registerEmail').value;
-      const password = document.getElementById('registerPassword').value;
-      const confirm = document.getElementById('registerConfirmPassword').value;
-      if (!email || !password || !confirm) return alert('Fill all fields');
-      if (password !== confirm) return alert('Passwords do not match');
+        function showPaymentModal() {
+            loadPricingPlans();
+            document.getElementById('paymentModal').style.display = 'flex';
+            document.getElementById('stripePayment').style.display = 'none';
+            document.getElementById('mpesaPayment').style.display = 'none';
+            selectedPlan = null;
+            document.querySelectorAll('.payment-btn').forEach(b => b.disabled = true);
+        }
 
-      try {
-        const res = await fetch('/api/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
-        const data = await res.json();
-        if (res.ok) {
-          authToken = data.token;
-          currentUser = data.user;
-          localStorage.setItem('authToken', authToken);
-          showAuth(); updateUserInfo();
-          alert('Registration successful! You have received 10 free credits.');
-        } else alert(data.error || 'Registration failed');
-      } catch (err) { alert('Register error: ' + err.message); }
-    }
-
-    function logout() {
-      authToken = null;
-      currentUser = null;
-      localStorage.removeItem('authToken');
-      showLogin();
-    }
-
-    async function fetchUserInfo() {
-      try {
-        const res = await fetch('/api/user', {
-          headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        if (res.ok) {
-          const data = await res.json();
-          currentUser = data.user;
-          showAuth(); updateUserInfo();
-        } else logout();
-      } catch { logout(); }
-    }
-
-    function updateUserInfo() {
-      if (currentUser) {
-        document.getElementById('userEmail').textContent = currentUser.email;
-        document.getElementById('userPlan').textContent = currentUser.plan;
-        document.getElementById('userCredits').textContent = currentUser.credits;
-      }
-    }
-    if (authToken) fetchUserInfo();
-
-    // ================== Payment ==================
-    function showPaymentModal() {
-      loadPricingPlans();
-      document.getElementById('paymentModal').style.display = 'flex';
-      document.getElementById('stripePayment').style.display = 'none';
-      document.getElementById('mpesaPayment').style.display = 'none';
-      selectedPlan = null;
-    }
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-    async function loadPricingPlans() {
-      try {
-        const res = await fetch('/api/pricing-plans');
-        const plans = await res.json();
-        const container = document.getElementById('pricingPlans');
-        container.innerHTML = '';
-        plans.forEach(plan => {
-          const div = document.createElement('div');
-          div.className = 'plan-card';
-          div.onclick = () => selectPlan(plan, div);
-          div.innerHTML = `<h4>${plan.name}</h4>
+        async function loadPricingPlans() {
+    const res = await fetch(`${BACKEND_URL}/api/pricing-plans`);
+    const plans = await res.json();
+    const container = document.getElementById('pricingPlans');
+    container.innerHTML = '';
+    plans.forEach(plan => {
+        const div = document.createElement('div');
+        div.className = 'plan-card';
+        div.onclick = () => selectPlan(plan, div);
+        div.innerHTML = `<h4>${plan.name}</h4>
             <div class="plan-price">$${plan.price}</div>
             <ul>${plan.features.map(f => `<li>${f}</li>`).join('')}</ul>`;
-          container.appendChild(div);
-        });
-      } catch (err) { console.error('Plans load fail', err); }
-    }
-
-    function selectPlan(plan, el) {
-      selectedPlan = plan;
-      document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
-      el.classList.add('selected');
-      document.querySelectorAll('.payment-btn').forEach(b => b.disabled = false);
-    }
-
-    function showStripePayment() {
-      if (!selectedPlan) return alert('Select a plan first');
-      document.getElementById('stripePayment').style.display = 'block';
-      document.getElementById('mpesaPayment').style.display = 'none';
-    }
-    function showMpesaPayment() {
-      if (!selectedPlan) return alert('Select a plan first');
-      document.getElementById('mpesaPayment').style.display = 'block';
-      document.getElementById('stripePayment').style.display = 'none';
-    }
-
-    async function initiateStripePayment() {
-      if (!selectedPlan) return alert('Select a plan first');
-      try {
-        const res = await fetch('/api/create-stripe-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json','Authorization': `Bearer ${authToken}` },
-          body: JSON.stringify({ planId: selectedPlan.id })
-        });
-        const data = await res.json();
-        if (res.ok) {
-          paymentSessionId = data.sessionId;
-          showPaymentProcessing('Redirecting to Stripe checkout...');
-        } else alert(data.error || 'Stripe init failed');
-      } catch (err) { alert('Stripe error: ' + err.message); }
-    }
-
-    async function initiateMpesaPayment() {
-      if (!selectedPlan) return alert('Select a plan first');
-      const phone = document.getElementById('mpesaPhone').value;
-      if (!phone || !phone.startsWith('254')) return alert('Enter valid 254... number');
-      try {
-        const res = await fetch('/api/initiate-mpesa-payment', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json','Authorization': `Bearer ${authToken}` },
-          body: JSON.stringify({ planId: selectedPlan.id, phoneNumber: phone })
-        });
-        const data = await res.json();
-        if (res.ok) {
-          paymentSessionId = data.transactionId;
-          showPaymentProcessing(data.message);
-          checkPaymentStatus();
-        } else alert(data.error || 'M-Pesa init failed');
-      } catch (err) { alert('M-Pesa error: ' + err.message); }
-    }
-
-    function showPaymentProcessing(msg) {
-      document.getElementById('paymentStatusMessage').textContent = msg;
-      document.getElementById('paymentProcessingModal').style.display = 'flex';
-      document.getElementById('paymentModal').style.display = 'none';
-    }
-
-    async function checkPaymentStatus() {
-      if (!paymentSessionId) return;
-      try {
-        const res = await fetch(`/api/payment-status/${paymentSessionId}`, {
-          headers: { 'Authorization': `Bearer ${authToken}` }
-        });
-        const data = await res.json();
-        if (res.ok && data.status === 'success') {
-          alert('Payment successful! Credits added.');
-          document.getElementById('paymentProcessingModal').style.display = 'none';
-          fetchUserInfo();
-        } else {
-          setTimeout(checkPaymentStatus, 5000);
-        }
-      } catch { setTimeout(checkPaymentStatus, 5000); }
-    }
-
-    // ================== Editor ==================
-    async function humanize() {
-      const text = inputText.value.trim();
-      if (!text) return alert('Enter text to humanize');
-      humanizeBtn.disabled = true;
-      humanizeBtn.textContent = 'Processing...';
-      try {
-        const res = await fetch('/api/humanize', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json','Authorization': `Bearer ${authToken}` },
-          body: JSON.stringify({ text })
-        });
-        const data = await res.json();
-        if (res.ok) outputArea.textContent = data.humanizedText;
-        else alert(data.error || 'Humanize failed');
-      } catch (err) { alert('Error: ' + err.message); }
-      finally {
-        humanizeBtn.disabled = false;
-        humanizeBtn.textContent = 'Humanize';
-      }
-    }
-    humanizeBtn.addEventListener('click', humanize);
-
-    function loadSample() {
-      inputText.value = "This is a sample AI-generated text that needs to be humanized.";
-      updateWordCount();
-    }
-    function clearText() {
-      inputText.value = "";
-      outputArea.textContent = "Your humanized text will appear here...";
-      updateWordCount();
-    }
-
-    copyBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText(outputArea.textContent);
-      alert('Copied to clipboard');
+        container.appendChild(div);
     });
-  </script>
+}
+
+        function selectPlan(plan, el) {
+    selectedPlan = plan;
+    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    document.querySelectorAll('.payment-btn').forEach(b => b.disabled = false);
+}
+        // Update initiateStripePayment to send priceId
+async function initiateStripePayment() {
+    if (!selectedPlan || !selectedPlan.stripePriceId) return alert('Select a plan first');
+    try {
+        const res = await fetch(`${BACKEND_URL}/api/create-stripe-session`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` },
+            body: JSON.stringify({ priceId: selectedPlan.stripePriceId })
+        });
+        const data = await res.json();
+        if (res.ok && data.url) {
+            window.location.href = data.url; // Redirect to Stripe
+        } else {
+            alert(data.error || 'Stripe payment failed');
+        }
+    } catch (err) {
+        alert('Stripe error: ' + err.message);
+    }
+} // <-- Added missing closing brace here
+
+        function showStripePayment() {
+            if (!selectedPlan) return alert('Select a plan first');
+            document.getElementById('stripePayment').style.display = 'block';
+            document.getElementById('mpesaPayment').style.display = 'none';
+        }
+        function showMpesaPayment() {
+            if (!selectedPlan) return alert('Select a plan first');
+            document.getElementById('mpesaPayment').style.display = 'block';
+            document.getElementById('stripePayment').style.display = 'none';
+        }
+
+        async function initiateMpesaPayment() {
+            if (!selectedPlan) return alert('Select a plan first');
+            const phone = document.getElementById('mpesaPhone').value;
+            if (!phone || !phone.startsWith('254')) return alert('Enter valid 254... number');
+            try {
+                const res = await fetch(`${BACKEND_URL}/api/mpesa/pay`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json','Authorization': `Bearer ${authToken}` },
+                    body: JSON.stringify({
+                        phone,
+                        amount: selectedPlan.price,
+                        accountReference: 'WriterWizard',
+                        transactionDesc: `Upgrade to ${selectedPlan.name}`
+                    })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    paymentSessionId = data.data.CheckoutRequestID;
+                    showPaymentProcessing('STK Push sent. Complete payment on your phone.');
+                    checkPaymentStatus();
+                } else alert(data.error || 'M-Pesa init failed');
+            } catch (err) { alert('M-Pesa error: ' + err.message); }
+        }
+
+        function showPaymentProcessing(msg) {
+            document.getElementById('paymentStatusMessage').textContent = msg;
+            document.getElementById('paymentProcessingModal').style.display = 'flex';
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        async function checkPaymentStatus() {
+            if (!paymentSessionId) return;
+            try {
+                const res = await fetch(`${BACKEND_URL}/api/payment-status/${paymentSessionId}`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                const data = await res.json();
+                if (res.ok && data.status === 'success') {
+                    alert('Payment successful! Credits added.');
+                    document.getElementById('paymentProcessingModal').style.display = 'none';
+                    fetchUserInfo();
+                } else {
+                    setTimeout(checkPaymentStatus, 5000);
+                }
+            } catch { setTimeout(checkPaymentStatus, 5000); }
+        }
+
+        async function humanize() {
+            const text = inputText.value.trim();
+            if (!text) return alert('Enter text to humanize');
+            humanizeBtn.disabled = true;
+            humanizeBtn.textContent = 'Processing...';
+            try {
+                const res = await fetch(`${BACKEND_URL}/api/humanize`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json','Authorization': `Bearer ${authToken}` },
+                    body: JSON.stringify({ text })
+                });
+                const data = await res.json();
+                if (res.ok) outputArea.textContent = data.humanizedText;
+                else alert(data.error || 'Humanize failed');
+            } catch (err) { alert('Error: ' + err.message); }
+            finally {
+                humanizeBtn.disabled = false;
+                humanizeBtn.textContent = 'Humanize';
+            }
+        }
+        humanizeBtn.addEventListener('click', humanize);
+
+        function loadSample() {
+            inputText.value = "This is a sample AI-generated text that needs to be humanized.";
+            updateWordCount();
+        }
+        function clearText() {
+            inputText.value = "";
+            outputArea.textContent = "Your humanized text will appear here...";
+            updateWordCount();
+        }
+
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(outputArea.textContent);
+            alert('Copied to clipboard');
+        });
+    </script>
 </body>
 </html>
