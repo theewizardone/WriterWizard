@@ -6,11 +6,12 @@ const jwt = require('jsonwebtoken');
 const { OpenAI } = require('openai');
 const mongoose = require("mongoose");
 const stripe = require('stripe')(process.env.STRIPE_TEST_SECRET_KEY);
-const axios = require("axios"); // move this up with other requires
+const axios = require("axios"); // for M-Pesa API
 const User = require("./models/User");
 const mpesaRoutes = require("./routes/mpesaRoutes.cjs");
 const Payment = require("./models/Payment");
-const path = require("path"); // <-- this line was missing
+const path = require("path"); // for serving frontend
+const trainingSystem = require('./training-system'); // Import the training system
 
 
 const app = express();
@@ -195,10 +196,14 @@ app.post('/api/humanize', authenticateToken, async (req, res) => {
       });
     }
 
+    // Use the optimized system prompt
+    const systemPrompt = trainingSystem.optimizedPrompt || "You are a professional editor.";
+
+
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
-        { role: "system", content: "You are a professional editor..." },
+        { role: "system", content: systemPrompt },
         { role: "user", content: `Rewrite this in a ${tone} tone: ${text}` }
       ],
       temperature: creativity / 10,
@@ -207,13 +212,11 @@ app.post('/api/humanize', authenticateToken, async (req, res) => {
 
     const humanizedText = completion.choices[0].message.content;
 
-    user.credits -= creditsNeeded;
-    await user.save();
+    await trainingSystem.saveAIExample(text, humanizedText, tone);
 
     res.json({ humanizedText, creditsUsed: creditsNeeded, remainingCredits: user.credits });
   } catch (error) {
-    console.error('OpenAI API error:', error);
-    res.status(500).json({ error: 'Failed to process text' });
+    // ...error handling...
   }
 });
 

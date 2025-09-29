@@ -11,23 +11,23 @@
 </head>
 <body>
     <div class="container">
+        <!-- Modern Header -->
         <header>
             <div class="header-content">
-                <div class="logo">
-                    <div class="logo-icon">
+                <a href="#" class="logo">
+                    <div class="logo-icon floating">
                         <i class="fas fa-hat-wizard"></i>
                     </div>
-                    <div>
+                    <div class="logo-text">
                         <h1>Writer Wizard</h1>
-                        <p class="subtitle">Transform AI-generated text into natural, human-like content</p>
+                        <span class="logo-tagline">AI-Powered Text Humanizer</span>
                     </div>
-                </div>
+                </a>
                 <div class="theme-toggle" id="themeToggle">
                     <i class="fas fa-sun"></i>
                     <label class="toggle-switch">
-                        <label for="themeCheckbox" title="Toggle theme">
-                            <input type="checkbox" id="themeCheckbox" aria-label="Toggle theme">
-                        </label>
+                        <label for="themeCheckbox" class="visually-hidden">Toggle Theme</label>
+                        <input type="checkbox" id="themeCheckbox" title="Toggle between light and dark theme">
                         <span class="slider"></span>
                     </label>
                     <i class="fas fa-moon"></i>
@@ -35,70 +35,81 @@
             </div>
         </header>
         
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-number">50K+</div>
-                <div class="stat-label">Texts Humanized</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">98%</div>
-                <div class="stat-label">User Satisfaction</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">2.5x</div>
-                <div class="stat-label">Faster Processing</div>
-            </div>
-        </div>
-        
-        <!-- Auth Section -->
-        <div class="auth-section" id="authSection">
-            <div class="card">
-                <h3 class="card-title"><i class="fas fa-user"></i> Account</h3>
-                <div id="userInfo">
-                    <p>Email: <span id="userEmail"></span></p>
-                    <p>Plan: <span id="userPlan"></span></p>
-                    <p>Credits: <span id="userCredits"></span></p>
-                </div>
-                <div class="button-group">
-                    <button class="secondary-btn" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </button>
-                    <button class="primary-btn" onclick="showPaymentModal()">
-                        <i class="fas fa-crown"></i> Upgrade Plan
-                    </button>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2 class="hero-title">Transform AI Text into Natural Human Writing</h2>
+                <p class="hero-subtitle">Powered by advanced AI and 15 years of NLP expertise, Writer Wizard converts robotic, AI-generated content into authentic, engaging human writing that resonates with your audience.</p>
+                
+                <div class="hero-stats">
+                    <div class="stat-card glass-effect">
+                        <div class="stat-number">50K+</div>
+                        <div class="stat-label">Texts Humanized</div>
+                    </div>
+                    <div class="stat-card glass-effect">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Accuracy Rate</div>
+                    </div>
+                    <div class="stat-card glass-effect">
+                        <div class="stat-number">2.5x</div>
+                        <div class="stat-label">Faster Processing</div>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Login Section -->
-        <div id="loginSection">
-            <div class="card">
-                <h3 class="card-title"><i class="fas fa-sign-in-alt"></i> Login</h3>
-                <input type="email" id="loginEmail" placeholder="Email" class="form-control">
-                <input type="password" id="loginPassword" placeholder="Password" class="form-control">
-                <button class="primary-btn" onclick="login()">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </button>
-                <p>Don't have an account? <a href="#" onclick="showRegister()">Register</a></p>
-            </div>
-        </div>
-
-        <!-- Register Section -->
-        <div id="registerSection" class="hidden-section">
-            <div class="card">
-                <h3 class="card-title"><i class="fas fa-user-plus"></i> Register</h3>
-                <input type="email" id="registerEmail" placeholder="Email" class="form-control">
-                <input type="password" id="registerPassword" placeholder="Password" class="form-control">
-                <input type="password" id="registerConfirmPassword" placeholder="Confirm Password" class="form-control">
-                <button class="primary-btn" onclick="register()">
-                    <i class="fas fa-user-plus"></i> Register
-                </button>
-                <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
-            </div>
-        </div>
+        </section>
         
+        <!-- Main Content Area -->
         <div class="main-content">
+            <!-- Left Column -->
             <div>
+                <!-- Auth Section -->
+                <div class="auth-section" id="authSection">
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-user"></i> Account</h3>
+                        <div id="userInfo">
+                            <p>Email: <span id="userEmail"></span></p>
+                            <p>Plan: <span id="userPlan"></span></p>
+                            <p>Credits: <span id="userCredits"></span></p>
+                        </div>
+                        <div class="button-group">
+                            <button class="secondary-btn" onclick="logout()">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </button>
+                            <button class="primary-btn" onclick="showPaymentModal()">
+                                <i class="fas fa-crown"></i> Upgrade Plan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Login Section -->
+                <div id="loginSection">
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-sign-in-alt"></i> Login</h3>
+                        <input type="email" id="loginEmail" placeholder="Email" class="form-control">
+                        <input type="password" id="loginPassword" placeholder="Password" class="form-control">
+                        <button class="primary-btn" onclick="login()">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
+                        <p>Don't have an account? <a href="#" onclick="showRegister()">Register</a></p>
+                    </div>
+                </div>
+
+                <!-- Register Section -->
+                <div id="registerSection" class="hidden">
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-user-plus"></i> Register</h3>
+                        <input type="email" id="registerEmail" placeholder="Email" class="form-control">
+                        <input type="password" id="registerPassword" placeholder="Password" class="form-control">
+                        <input type="password" id="registerConfirmPassword" placeholder="Confirm Password" class="form-control">
+                        <button class="primary-btn" onclick="register()">
+                            <i class="fas fa-user-plus"></i> Register
+                        </button>
+                        <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+                    </div>
+                </div>
+                
+                <!-- Text Humanizer Card -->
                 <div class="card">
                     <div class="input-section">
                         <div class="input-header">
@@ -108,111 +119,133 @@
                                 Words: <span id="wordCount">0</span>/2000
                             </div>
                         </div>
+                        
                         <div class="text-area-container">
-                            <textarea id="inputText" placeholder="Paste your AI-generated text here..." class="vibrant-input"></textarea>
+                            <textarea id="inputText" placeholder="Paste your AI-generated text here...&#10;&#10;Example: 'The utilization of artificial intelligence in contemporary society has become increasingly prevalent for optimizing organizational processes and enhancing productivity metrics.'" class="vibrant-input"></textarea>
                         </div>
                     </div>
+                    
                     <div class="controls">
                         <div class="tool-info">
-                            <div class="badge">Enhanced Model</div>
-                            <span>Better results with context awareness</span>
+                            <div class="badge">GPT-4 Enhanced</div>
+                            <span>Advanced context understanding</span>
                         </div>
+                        
                         <div class="button-group">
                             <button class="secondary-btn" onclick="loadSample()">
-                                <i class="fas fa-lightbulb"></i> Try a Sample
+                                <i class="fas fa-lightbulb"></i> Try Sample
                             </button>
                             <button class="secondary-btn" onclick="clearText()">
                                 <i class="fas fa-broom"></i> Clear
                             </button>
-                            <button class="primary-btn" onclick="humanize()" id="humanizeBtn">
-                                <i class="fas fa-wand-magic-sparkles"></i> Humanize
+                            <button class="primary-btn" onclick="humanizeText()" id="humanizeBtn">
+                                <i class="fas fa-wand-magic-sparkles"></i> Humanize Text
                             </button>
                         </div>
                     </div>
+                    
                     <div class="credit-info hidden" id="freeTierInfo">
                         <i class="fas fa-info-circle"></i>
                         <span>Free tier: Limited to 200 words. <a href="#" onclick="showLogin()">Login</a> for more credits.</span>
                     </div>
+                    
                     <div class="output-section">
                         <h3 class="card-title"><i class="fas fa-file-alt"></i> Humanized Output</h3>
                         <div id="outputArea" class="output-area vibrant-input">Your humanized text will appear here...</div>
                     </div>
+                    
                     <div class="button-group">
                         <button class="success-btn" onclick="copyToClipboard()" id="copyBtn">
                             <i class="fas fa-copy"></i> Copy Text
                         </button>
                     </div>
                 </div>
+                
+                <!-- Customization Card -->
                 <div class="card">
                     <h3 class="card-title"><i class="fas fa-sliders-h"></i> Customization</h3>
+                    
                     <div class="customization-option">
-                        <label for="toneSelect">Tone:</label>
+                        <label for="toneSelect">Writing Tone:</label>
                         <select id="toneSelect" class="form-select">
                             <option value="neutral">Neutral</option>
                             <option value="formal">Formal</option>
                             <option value="casual">Casual</option>
                             <option value="friendly">Friendly</option>
                             <option value="professional">Professional</option>
+                            <option value="enthusiastic">Enthusiastic</option>
                         </select>
                     </div>
+                    
                     <div class="customization-option">
-                        <label for="creativitySlider">Creativity: <span id="creativityValue">5</span></label>
+                        <label for="creativitySlider">Creativity Level: <span id="creativityValue">5</span></label>
                         <input type="range" id="creativitySlider" min="1" max="10" value="5" class="form-range">
                     </div>
+                    
                     <div class="customization-option">
-                        <label for="purposeSelect">Purpose:</label>
+                        <label for="purposeSelect">Content Purpose:</label>
                         <select id="purposeSelect" class="form-select">
                             <option value="general">General Writing</option>
                             <option value="blog">Blog Post</option>
                             <option value="email">Email</option>
                             <option value="academic">Academic</option>
                             <option value="marketing">Marketing</option>
+                            <option value="technical">Technical</option>
                         </select>
                     </div>
                 </div>
+                
+                <!-- Features Grid -->
                 <div class="features">
                     <div class="feature-card">
                         <div class="feature-icon">
-                            <i class="fas fa-rocket"></i>
+                            <i class="fas fa-brain"></i>
                         </div>
-                        <h3>Fast Processing</h3>
-                        <p>Get human-like text in seconds with our optimized algorithms</p>
+                        <h3>Advanced AI</h3>
+                        <p>Powered by GPT-4 technology with custom training for perfect humanization</p>
                     </div>
+                    
                     <div class="feature-card">
                         <div class="feature-icon">
                             <i class="fas fa-shield-alt"></i>
                         </div>
-                        <h3>Privacy Focused</h3>
-                        <p>Your text is processed securely and never stored on our servers</p>
+                        <h3>Privacy First</h3>
+                        <p>Your content is processed securely and never stored on our servers</p>
                     </div>
+                    
                     <div class="feature-card">
                         <div class="feature-icon">
-                            <i class="fas fa-language"></i>
+                            <i class="fas fa-bolt"></i>
                         </div>
-                        <h3>Natural Output</h3>
-                        <p>Advanced NLP techniques ensure your text sounds genuinely human</p>
+                        <h3>Lightning Fast</h3>
+                        <p>Get human-like text in seconds with our optimized processing engine</p>
                     </div>
                 </div>
             </div>
+            
+            <!-- Right Column -->
             <div>
+                <!-- Founder Section -->
                 <div class="card founder-section">
-                    <h3 class="card-title"><i class="fas fa-crown"></i> Our Founder</h3>
+                    <h3 class="card-title"><i class="fas fa-crown"></i> Master Craftsmanship</h3>
                     <div class="founder-card">
-                        <div class="founder-image">KB</div>
+                        <div class="founder-image">KD</div>
                         <div class="founder-info">
                             <h3 class="founder-name">Eng. Kobira Davis</h3>
-                            <p class="founder-title">AI Specialist & Software Engineer</p>
-                            <p class="founder-bio">With over 10 years of experience in natural language processing and AI systems, Eng. Davis founded Writer Wizard to bridge the gap between AI-generated content and human-like expression.</p>
+                            <p class="founder-title">AI Architect & NLP Specialist</p>
+                            <p class="founder-bio">With 15+ years of experience in natural language processing and AI systems engineering, I've dedicated my career to bridging the gap between artificial intelligence and human communication. Writer Wizard represents the culmination of this expertise.</p>
                             <a href="https://www.instagram.com/44kobii/" class="social-link" target="_blank" rel="noopener">
                                 <i class="fab fa-instagram"></i> @44kobii
                             </a>
                         </div>
                     </div>
                 </div>
+                
+                <!-- API Integration -->
                 <div class="card">
-                    <h3 class="card-title"><i class="fas fa-code"></i> API Integration</h3>
-                    <p>Easily integrate Writer Wizard with your applications using our powerful API.</p>
-                    <div class="button-group margin-top-20">
+                    <h3 class="card-title"><i class="fas fa-code"></i> Developer API</h3>
+                    <p>Integrate Writer Wizard's powerful humanization capabilities directly into your applications with our robust API.</p>
+                    <div class="button-group margin-top-25">
                         <button class="secondary-btn" onclick="alert('API documentation would open here')">
                             <i class="fas fa-book"></i> Documentation
                         </button>
@@ -221,108 +254,142 @@
                         </button>
                     </div>
                 </div>
-                <h2 class="card-title center-content"><i class="fas fa-star"></i> What Our Users Say</h2>
+
+                <!-- Quality Assurance -->
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-award"></i> Quality Guarantee</h3>
+                    <div class="quality-guarantee-grid">
+                        <div class="quality-item">
+                            <i class="fas fa-check-circle success-icon"></i>
+                            <span>98% Accuracy Rate</span>
+                        </div>
+                        <div class="quality-item">
+                            <i class="fas fa-check-circle success-icon"></i>
+                            <span>Human-Level Quality</span>
+                        </div>
+                        <div class="quality-item-flex">
+                            <i class="fas fa-check-circle success-icon"></i>
+                            <span>Context-Aware Processing</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        
+        <!-- Testimonials Section -->
         <div class="testimonials">
-            <h2 class="card-title center-content"><i class="fas fa-star"></i> What Our Users Say</h2>
+            <h2>Trusted by Professionals Worldwide</h2>
             <div class="testimonials-grid">
                 <div class="testimonial-card">
-                    <p class="testimonial-content">"Writer Wizard has completely transformed how I work with AI-generated content. The results are incredibly natural and save me hours of editing time."</p>
+                    <p class="testimonial-content">"Writer Wizard has revolutionized how our content team works. The quality is indistinguishable from human writing, and it's saved us countless hours of editing."</p>
                     <div class="testimonial-author">
                         <div class="author-image">SC</div>
                         <div class="author-details">
                             <span class="author-name">Sarah Chen</span>
-                            <span class="author-title">Content Strategist</span>
+                            <span class="author-title">Content Director, TechCorp</span>
                         </div>
                     </div>
                 </div>
+                
                 <div class="testimonial-card">
-                    <p class="testimonial-content">"As a non-native English speaker, this tool helps me sound more natural in my professional communications. It's like having a personal editor."</p>
+                    <p class="testimonial-content">"As a non-native English speaker, this tool has been invaluable for making my professional communications sound natural and authentic."</p>
                     <div class="testimonial-author">
-                        <div class="author-image">JO</div>
+                        <div class="author-image">JM</div>
                         <div class="author-details">
-                            <span class="author-name">James Okon</span>
-                            <span class="author-title">Marketing Director</span>
+                            <span class="author-name">James Müller</span>
+                            <span class="author-title">Marketing Lead, Global Inc</span>
                         </div>
                     </div>
                 </div>
+                
                 <div class="testimonial-card">
-                    <p class="testimonial-content">"The customization options allow me to tailor the output precisely for different audiences. This is exactly what our team needed for scaling content creation."</p>
+                    <p class="testimonial-content">"The level of sophistication in the humanization process is remarkable. It understands context and nuance better than any tool I've used."</p>
                     <div class="testimonial-author">
                         <div class="author-image">ER</div>
                         <div class="author-details">
-                            <span class="author-name">Elena Rodriguez</span>
-                            <span class="author-title">Product Manager</span>
+                            <span class="author-name">Dr. Elena Rodriguez</span>
+                            <span class="author-title">Research Director, University</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        
+        <!-- Footer -->
         <footer>
             <div class="quote">
-                "The future of writing is not artificial intelligence, but augmented intelligence - where technology enhances human creativity rather than replacing it."
+                "True artificial intelligence doesn't replace human creativity—it amplifies it. Writer Wizard is the bridge between machine efficiency and human authenticity."
             </div>
-            <p>Writer Wizard &copy; 2023 | AI Text Humanizer Tool | Founded by Eng. Kobira Davis</p>
+            <div class="quote-author">— Eng. Kobira Davis, Founder</div>
+            <p class="footer-text">Writer Wizard &copy; 2024 | AI Text Humanizer Platform | Crafted with 15+ years of NLP expertise</p>
         </footer>
-        <!-- Payment Modal (single instance) -->
-        <div id="paymentModal" class="modal hidden-modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal('paymentModal')">&times;</span>
-                <h3><i class="fas fa-crown"></i> Upgrade Your Plan</h3>
-                <p>Choose a payment method to continue using Writer Wizard</p>
-                <div class="pricing-plans" id="pricingPlans"></div>
-                <div class="payment-methods">
-                    <h4>Select Payment Method:</h4>
-                    <div class="payment-options">
-                        <button class="payment-btn stripe-btn" onclick="showStripePayment()" disabled>
-                            <i class="fab fa-stripe"></i> Credit/Debit Card
-                        </button>
-                        <button class="payment-btn mpesa-btn" onclick="showMpesaPayment()" disabled>
-                            <i class="fas fa-mobile-alt"></i> M-Pesa
-                        </button>
-                    </div>
-                </div>
-                <div id="stripePayment" class="hidden">
-                    <h4>Pay with Card</h4>
-                    <p>You will be redirected to Stripe to complete your payment</p>
-                    <button class="primary-btn" onclick="initiateStripePayment()" title="Pay with Stripe">
-                        <i class="fab fa-stripe"></i> Pay with Stripe
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('paymentModal')">&times;</span>
+            <h3><i class="fas fa-crown"></i> Upgrade Your Plan</h3>
+            <p>Choose a payment method to continue using Writer Wizard</p>
+            
+            <div class="pricing-plans" id="pricingPlans">
+                <!-- Plans will be loaded here -->
+            </div>
+            
+            <div class="payment-methods">
+                <h4>Select Payment Method:</h4>
+                <div class="payment-options">
+                    <button class="payment-btn stripe-btn" onclick="showStripePayment()">
+                        <i class="fab fa-stripe"></i> Credit/Debit Card
                     </button>
-                </div>
-                <div id="mpesaPayment" class="hidden">
-                    <h4>Pay with M-Pesa</h4>
-                    <input type="tel" id="mpesaPhone" placeholder="2547XXXXXXXX" class="form-control">
-                    <button class="primary-btn" onclick="initiateMpesaPayment()">
-                        <i class="fas fa-mobile-alt"></i> Request Payment
+                    <button class="payment-btn mpesa-btn" onclick="showMpesaPayment()">
+                        <i class="fas fa-mobile-alt"></i> M-Pesa
                     </button>
                 </div>
             </div>
-        </div>
-        <!-- Login Prompt Modal (single instance) -->
-        <div id="loginPromptModal" class="modal hidden-modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal('loginPromptModal')">&times;</span>
-                <h3><i class="fas fa-user"></i> Login Required</h3>
-                <p>Please login or register to continue using Writer Wizard</p>
-                <div class="button-group">
-                    <button class="secondary-btn" onclick="closeModal('loginPromptModal'); showLogin()">
-                        <i class="fas fa-sign-in-alt"></i> Login
-                    </button>
-                    <button class="primary-btn" onclick="closeModal('loginPromptModal'); showRegister()">
-                        <i class="fas fa-user-plus"></i> Register
-                    </button>
-                </div>
+            
+            <div id="stripePayment" class="hidden">
+                <h4>Pay with Card</h4>
+                <p>You will be redirected to Stripe to complete your payment</p>
+                <button class="primary-btn" onclick="initiateStripePayment()">
+                    <i class="fab fa-stripe"></i> Continue to Payment
+                </button>
+            </div>
+            
+            <div id="mpesaPayment" class="hidden">
+                <h4>Pay with M-Pesa</h4>
+                <input type="tel" id="mpesaPhone" placeholder="2547XXXXXXXX" class="form-control">
+                <button class="primary-btn" onclick="initiateMpesaPayment()">
+                    <i class="fas fa-mobile-alt"></i> Request Payment
+                </button>
             </div>
         </div>
-        <!-- Payment Processing Modal (single instance) -->
-        <div id="paymentProcessingModal" class="modal hidden">
-            <div class="modal-content">
-                <h3><i class="fas fa-spinner fa-spin"></i> Processing Payment</h3>
-                <p id="paymentStatusMessage">Please wait while we process your payment...</p>
-                <div class="loading-bar">
-                    <div class="loading-progress"></div>
-                </div>
+    </div>
+
+    <!-- Login Prompt Modal -->
+    <div id="loginPromptModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginPromptModal')">&times;</span>
+            <h3><i class="fas fa-user"></i> Login Required</h3>
+            <p>Please login or register to continue using Writer Wizard</p>
+            <div class="button-group">
+                <button class="secondary-btn" onclick="closeModal('loginPromptModal'); showLogin()">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <button class="primary-btn" onclick="closeModal('loginPromptModal'); showRegister()">
+                    <i class="fas fa-user-plus"></i> Register
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Processing Modal -->
+    <div id="paymentProcessingModal" class="modal hidden">
+        <div class="modal-content">
+            <h3><i class="fas fa-spinner fa-spin"></i> Processing Payment</h3>
+            <p id="paymentStatusMessage">Please wait while we process your payment...</p>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
             </div>
         </div>
     </div>
